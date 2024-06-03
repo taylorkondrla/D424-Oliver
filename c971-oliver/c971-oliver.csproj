@@ -58,4 +58,14 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="C971 Wireframe.png" />
+	  <None Remove="Models\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="C971-Wireframe.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	</ItemGroup>
 </Project>
