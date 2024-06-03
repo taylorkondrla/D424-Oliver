@@ -1,12 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="c971_oliver.AssessmentDetailsPage"
-             Title="AssessmentDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Assessment Details">
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Label Text="Assessments" FontSize="Large" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+            <CollectionView ItemsSource="{Binding Assessments}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="0,5">
+                            <StackLayout Orientation="Horizontal" Margin="0,5">
+                                <Label Text="Type: " FontSize="Small"/>
+                                <Picker x:Name="typePicker" SelectedItem="{Binding Type}" SelectedIndexChanged="TypePickerSelectedIndexChanged">
+
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Performance Assessment</x:String>
+                                        <x:String>Objective Assessment</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                                </Picker>
+
+                            </StackLayout>
+                            <Label Text="Name:" FontSize="Small"/>
+                            <Entry x:Name="assessmentNameEntry" Text="{Binding Name}" Placeholder="Enter Assessment Name" FontSize="Small" TextChanged="AssessmentNameChanged"/>
+                            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                <StackLayout>
+                                    <Label Text="Start Date:" FontSize="Small"/>
+                                    <DatePicker x:Name="startDatePicker" Date="{Binding StartDate}" DateSelected="AssessmentStartDateChanged"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="End Date:" FontSize="Small"/>
+                                    <DatePicker x:Name="endDatePicker" Date="{Binding EndDate}" DateSelected="AssessmentEndDateChanged"/>
+                                </StackLayout>
+                            </StackLayout>
+                             <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                <Label Text="Start Date Notification" VerticalOptions="Center" FontSize="Small"/>
+                                <Switch x:Name="startDateNotificationSwitch" IsToggled="{Binding StartDateNotificationEnabled}" Toggled="StartDateNotificationToggled"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                <Label Text="End Date Notification" VerticalOptions="Center" FontSize="Small"/>
+                                <Switch x:Name="endDateNotificationSwitch" IsToggled="{Binding EndDateNotificationEnabled}" Toggled="EndDateNotificationToggled"/>
+                            </StackLayout>
+                            <Button Text="Delete" Clicked="DeleteAssessmentClicked" Margin="0,20,0,10"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Add Assessment" Clicked="AddAssessmentClicked" HorizontalOptions="FillAndExpand" Margin="0,20,0,10"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
