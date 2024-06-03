@@ -3,7 +3,7 @@ using Plugin.LocalNotification.EventArgs;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using C971_oliver.Models;
+using c971_oliver.Models;
 using c971_oliver;
 
 namespace c971_oliver
