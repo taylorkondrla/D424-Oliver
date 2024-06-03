@@ -20,7 +20,7 @@ namespace c971_oliver
 
 
         }
-
+        //load example data 
         private void ExampleData()
         {
             _database.Initialize(); // Initialize the database
