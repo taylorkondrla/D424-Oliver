@@ -61,9 +61,12 @@
 	<ItemGroup>
 	  <None Remove="C971 Wireframe.png" />
 	  <None Remove="Models\" />
+	  <None Remove="wireframe.png" />
+	  <None Remove="C971 Repository Graph.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <BundleResource Include="C971-Wireframe.png" />
+	  <BundleResource Include="wireframe.png" />
+	  <BundleResource Include="C971 Repository Graph.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\" />
