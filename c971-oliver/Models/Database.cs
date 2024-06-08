@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using c971_oliver.Models;
 using SQLite;
-using static Android.Provider.ContactsContract.CommonDataKinds;
+
 
 namespace c971_oliver.Models
 {

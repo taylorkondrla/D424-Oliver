@@ -4,7 +4,6 @@ using c971_oliver.Models;
 using Plugin.LocalNotification;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Compatibility;
-using Android.Telecom;
 
 namespace c971_oliver
 {
