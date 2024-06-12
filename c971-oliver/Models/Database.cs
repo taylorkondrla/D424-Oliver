@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using c971_oliver.Models;
 using SQLite;
-
 
 namespace c971_oliver.Models
 {
@@ -70,7 +68,11 @@ namespace c971_oliver.Models
             string query = $"SELECT * FROM Course WHERE TermId={termId}";
             return database.Query<Course>(query);
         }
-
+        public List<Course> GetCoursesByDate(DateTime date)
+        {
+            string query = "SELECT * FROM Course WHERE @date BETWEEN StartDate AND EndDate";
+            return database.Query<Course>(query, date);
+        }
         public int UpdateCourse(Course course)
         {
             return database.Update(course);
@@ -130,6 +132,23 @@ namespace c971_oliver.Models
             database.DeleteAll<Assessment>();
             database.DeleteAll<Note>();
         }
+        public List<(Term term, List<Course> courses)> GetAllTermsWithCourses()
+        {
+            var termsWithCourses = new List<(Term term, List<Course> courses)>();
+
+            // Retrieve all terms
+            var terms = database.Table<Term>().ToList();
+
+            // For each term, retrieve its associated courses
+            foreach (var term in terms)
+            {
+                var courses = GetCoursesByTermId(term.Id);
+                termsWithCourses.Add((term, courses));
+            }
+
+            return termsWithCourses;
+        }
+
 
         public void Close()
         {

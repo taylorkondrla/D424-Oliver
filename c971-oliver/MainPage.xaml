@@ -2,8 +2,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="c971_oliver.MainPage">
 
+    <ScrollView>
     <StackLayout Padding="20">
         <Label Text="WGU Terms" FontSize="Large" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+        <!-- Search UI -->
+        <Label Text="Search Courses by Date" FontSize="Large" HorizontalOptions="Center" />
+        <DatePicker x:Name="SearchDatePicker" />
+        <Button Text="Search" Clicked="OnSearchClicked" Margin="0,10,0,20"/>
+
+        <!-- Search Results ListView -->
+        <ListView x:Name="SearchResultsListView" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding InstructorName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <!-- CollectionView to display term items -->
         <CollectionView ItemsSource="{Binding Terms}">
@@ -35,5 +50,9 @@
 
         <!-- Add Term button -->
         <Button Text="Add Term" Clicked="OnAddTermClicked" Margin="0,20,0,10"/>
+        <Button Text="Generate Report" Clicked="OnGenerateReportClicked" />
+
     </StackLayout>
+    </ScrollView>
+
 </ContentPage>

@@ -9,6 +9,7 @@ namespace c971_oliver
     {
         public ObservableCollection<Term> Terms { get; set; }
         private Database _database;
+        public ObservableCollection<Course> SearchResults { get; set; }
         public ObservableCollection<string> TypeOptions { get; } = new ObservableCollection<string> { "Performance Assessment", "Objective Assessment" };
         public MainPage(Database database)
         {
@@ -17,10 +18,30 @@ namespace c971_oliver
             ExampleData();
             Terms = new ObservableCollection<Term>(_database.GetAllTerms());
             BindingContext = this;
+            SearchResults = new ObservableCollection<Course>();
+            SearchResultsListView.ItemsSource = SearchResults;
 
 
         }
-        //load example data 
+        private void OnSearchClicked(object sender, EventArgs e)
+        {
+            // Get the selected date from the DatePicker
+            DateTime selectedDate = SearchDatePicker.Date;
+
+            // Filter the list of courses to find those that fall within the selected date range
+            IEnumerable<Course> coursesOnDate = _database.GetAllCourses().Where(course =>
+                course.StartDate <= selectedDate && selectedDate <= course.EndDate);
+
+            // Update the SearchResults collection with the filtered courses
+            SearchResults.Clear();
+            foreach (var course in coursesOnDate)
+            {
+                SearchResults.Add(course);
+            }
+        }
+
+
+
         private void ExampleData()
         {
             _database.Initialize(); // Initialize the database
@@ -575,6 +596,32 @@ namespace c971_oliver
                 term.EndDate = e.NewDate;
                 _database.UpdateTerm(term);
             }
+        }
+        private async void OnGenerateReportClicked(object sender, EventArgs e)
+        {
+            // Create a StringBuilder to build the report content
+            var reportContent = new System.Text.StringBuilder();
+
+            // Add report title
+            reportContent.AppendLine("Term and Course Report");
+            reportContent.AppendLine();
+
+            // Add each term and its associated courses to the report
+            foreach (var term in Terms)
+            {
+                reportContent.AppendLine($"Term: {term.Title}");
+                reportContent.AppendLine($"Start Date: {term.StartDate.ToShortDateString()} End Date: {term.EndDate.ToShortDateString()}");
+                reportContent.AppendLine("Courses:");
+                var courses = _database.GetCoursesByTermId(term.Id);
+                foreach (var course in courses)
+                {
+                    reportContent.AppendLine($"- {course.Title} - {course.StartDate.ToShortDateString()} to {course.EndDate.ToShortDateString()}");
+                }
+                reportContent.AppendLine();
+            }
+
+            // Display the report using a DisplayAlert
+            await DisplayAlert("Term and Course Report", reportContent.ToString(), "OK");
         }
     }
 
